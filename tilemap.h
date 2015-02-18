@@ -31,6 +31,12 @@ protected:
 	Tile_Pile * tilemap = nullptr;
 	int size_x, size_y;
 public:
+
+	bool is_in(int x, int y)
+	{
+		return (x>=0) && (x<size_x) && (y>=0) && (y<size_y);
+	}
+
 	Tilemap(int x, int y, int type)
 	{
 		size_x = x;

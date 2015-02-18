@@ -11,7 +11,9 @@ void render_isometric(Tilemap * Tilemap);
 
 void init_iso_target();
 
-extern sf::Texture * textures; 
+extern sf::Texture * textures;
+
+extern sf::Texture cursor;
 
 extern sf::RenderTexture iso_target;
 #endif

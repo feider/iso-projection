@@ -76,7 +76,11 @@ void render_isometric(Tilemap * tilemap)
 
 	int cx, cy, cz;
 
-	auto c_pos = get_mouse_tile( tilemap, {0, 0} );
+
+	
+	auto offset = sf::Vector2f(iso_target.getViewport(iso_target.getView()).left,iso_target.getViewport(iso_target.getView()).top) ;
+
+	auto c_pos = get_mouse_tile( tilemap, offset );
 	if(c_pos != sf::Vector3i(-1, -1, min_z-1))
 	{
 		cx = c_pos.x;
@@ -117,10 +121,11 @@ void init_iso_target()
 
 	iso_target.create(screen_x, screen_y, sf::VideoMode::getDesktopMode().bitsPerPixel);
 
-	textures = new sf::Texture[2];
+	textures = new sf::Texture[3];
 	
 	textures[0].loadFromFile("iso-64x64-outside.png", {0, 0, 0, 0});
 	textures[1].loadFromFile("tiles.png", {0, 0, 64, 44});
+	textures[2].loadFromFile("tiles.png", {0, 44, 64, 44});
 
 	cursor.loadFromFile("tiles.png", {64, 0, 64, 44});
 

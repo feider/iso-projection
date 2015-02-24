@@ -1,6 +1,9 @@
 #include "system.h"
 #include "tilemap.h"
 #include <iostream>
+#include "render.h"
+
+
 int size_x = 800;
 int size_y = 600;
 
@@ -13,7 +16,15 @@ int min_z = -10;
 
 sf::RenderWindow window;
 
-sf::Vector3i get_mouse_tile_pre(Tilemap * tilemap, const sf::Vector2i & offset)
+sf::Clock clk;
+
+void time_function(Tilemap * tilemap)
+{
+	float seconds_elapsed = clk.getElapsedTime().asSeconds();
+	game_interaction(tilemap, seconds_elapsed);
+}
+
+sf::Vector3i get_mouse_tile_pre(Tilemap * tilemap, const sf::Vector2f & offset)
 {
 	
 	int gmx = sf::Mouse::getPosition(window).x - offset.x;
@@ -48,20 +59,35 @@ sf::Vector3i get_mouse_tile_pre(Tilemap * tilemap, const sf::Vector2i & offset)
 	return {-1, -1, min_z-1};
 }
 
-sf::Vector3i get_mouse_tile(Tilemap * tilemap, const sf::Vector2i & offset)
+sf::Vector3i get_mouse_tile(Tilemap * tilemap, const sf::Vector2f & offset)
 {
 	sf::Vector3i normal;
 	sf::Vector3i side;
 
 	normal = get_mouse_tile_pre(tilemap, offset);
 
-	sf::Vector2i sv(offset.x, offset.y+tile_z);
+	sf::Vector2f sv(offset.x, offset.y+tile_z);
 
 	side = get_mouse_tile_pre(tilemap, sv);
 
 	if(side.z > normal.z)
 		return side;
 	return normal;
+
+}
+
+void game_interaction(Tilemap * tilemap, float second_elapsed)
+{
+	float pps = 10;
+	auto offset = sf::Vector2f(iso_target.getViewport(iso_target.getView()).left,iso_target.getViewport(iso_target.getView()).top) ;
+
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	{
+		offset.y = offset.y-(pps*second_elapsed);
+		iso_target.setView(sf::View(sf::Rect<float>(offset.x, offset.y, 800, 600)));
+
+	}
+
 
 }
 

@@ -19,8 +19,14 @@ extern int tile_z;
 extern int max_z;
 extern int min_z;
 
+void game_interaction(Tilemap *tilemap, float seconds_elapsed);
+void time_function(Tilemap * tilemap);
+
+
+extern sf::Clock clk;
+
 int get_mouse_tile_x();
 int get_mouse_tile_y();
-sf::Vector3i get_mouse_tile(Tilemap * tilemap, const sf::Vector2i & offset);
+sf::Vector3i get_mouse_tile(Tilemap * tilemap, const sf::Vector2f & offset);
 
 #endif
